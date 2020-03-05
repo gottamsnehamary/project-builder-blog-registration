@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import businesslogic.RegistrationValidation;
+import model.User;
+
 
 
 @WebServlet(urlPatterns= {"/signup"})
@@ -38,6 +41,8 @@ public class SignUpController extends HttpServlet {
 		
 // 1. ***Create an object for RegistrationValidation in the SignUpController class located inside JAVA Resources - src/controller***
 // 2. ***Call the checkUserDetails method with the object created***
+		RegistrationValidation checkUser=new RegistrationValidation();
+		checkUser.checkUserDetails(email, password, confirmPassword);
 		
 		if(checkUser.checkUserDetails(email, password, confirmPassword))
 		{
@@ -47,7 +52,7 @@ public class SignUpController extends HttpServlet {
 			user.setDate(date);
 			System.out.println(user.getEmail());
 			System.out.println(user.getPassword());
-			System.out.println(user.getDate());
+			//System.out.println(user.getDate());
 			request.setAttribute("message", "Registration Successful");
 			RequestDispatcher rd=this.getServletContext().getRequestDispatcher("/WEB-INF/views/signupView.jsp");
 			rd.forward(request, response);
@@ -59,7 +64,7 @@ public class SignUpController extends HttpServlet {
 			rd.forward(request, response);
 		}
 		
-		*/
+		
 	}
 
 }

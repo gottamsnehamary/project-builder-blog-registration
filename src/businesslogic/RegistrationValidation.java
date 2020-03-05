@@ -1,43 +1,59 @@
-
 package businesslogic;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-public class RegistrationValidation {
-	private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
-	private Pattern pattern;
-	  private Matcher matcher1,matcher2;
-	public boolean checkUserDetails(String email,String password,String confirmPassword) {
-		System.out.println("Enter check your details");
-		if(validEmail(email) && validPassword(password,confirmPassword))
-			return true;
+//Type your code
+public  class RegistrationValidation
+{
+	public boolean checkUserDetails(String email, String password, String confirmPassword)
+	{
+		boolean b=validPassword(password,confirmPassword);
+		boolean x=validEmail(email);
+		if(b&&x)
+		return true;
 		else
 			return false;
+		
 	}
-
-	private boolean validPassword(String password, String confirmPassword) {
-		
-		
-		 pattern = Pattern.compile(PASSWORD_PATTERN);
-		 if(password.equals(confirmPassword)) {
-		 
-		 matcher1 = pattern.matcher(password);
-		 matcher2 = pattern.matcher(confirmPassword);
-		 System.out.println(matcher1);
-		 System.out.println(matcher2);
-		  return (matcher2.matches() && matcher1.matches());
-		 }
+	private boolean validPassword(String password, String confirmPassword)
+	{   if(password.length()==0)
 		return false;
-		 
-	}
-
-	private boolean validEmail(String email) {
+		if(!(password.equals(confirmPassword)))
+			return false;
+		if(!((password.length()>=8)&&(password.length()<=20)))
+              return false;
+              char a[]=password.toCharArray();
+         int capital=0;
+         int lower=0;
+         int num=0;
+         int special=0;
+         for(int i=0;i<password.length();i++)
+         {
+        	 if((a[i]>=65)&&(a[i]<=90))
+        		 capital ++;
+        	 else if((a[i]>=97)&&(a[i]<=122))
+        		 lower ++;
+        	 else if((a[i]>=48)&&(a[i]<=58))
+        		 num ++;
+        	 else
+        		 special ++;
+        		 
+         }
+         if((capital>0)&&(lower>0)&&(num>0))
+        	 return true;
 		
-		 String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
-		 System.out.println("Enter email validation");
-		 return email.matches(regex);
+         else
+        	 return false;
+		
+		
+	}
+	private boolean validEmail(String email)
+	{
+	   
+        String emailregex = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+        Boolean b = email.matches(emailregex);
+		return b;
+		
 	}
 	
+		
 	
 }
